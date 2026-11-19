@@ -1,0 +1,68 @@
+name: Cross-Platform CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Test on ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install System Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk xvfb
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile and Syntax Check
+        run: |
+          python -m py_compile desktop_spider.py
+
+      - name: Verify Cross-Platform PlatformHelper and Locales
+        run: |
+          python -c "
+          import sys
+          from desktop_spider import PlatformHelper, I18n, APP_VERSION
+
+          print(f'Testing on {sys.platform} under Python {sys.version}')
+          print(f'Detected Version: {APP_VERSION}')
+
+          # Test I18n
+          i18n = I18n('en')
+          assert i18n.t('card_updater') != 'card_updater'
+          assert i18n.load('bn')
+          assert i18n.t('card_updater') != 'card_updater'
+          print('Locale verification passed!')
+
+          # Test PlatformHelper methods
+          assert hasattr(PlatformHelper, 'get_screen_bounds')
+          assert hasattr(PlatformHelper, 'setup_window_transparency')
+          assert hasattr(PlatformHelper, 'make_click_through')
+          assert hasattr(PlatformHelper, 'is_user_typing')
+          assert hasattr(PlatformHelper, 'play_audio')
+          print('PlatformHelper structure verified!')
+          "

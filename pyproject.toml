@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "desktop-spider"
+version = "2.6.0"
+authors = [
+  { name="Sohag Haldar", email="sohaghaldar@users.noreply.github.com" },
+]
+description = "Interactive, physics-driven cross-platform desktop spider & floating pet ecosystem for Windows, Linux, and macOS."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: MacOS X",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Desktop Environment",
+    "Topic :: Games/Entertainment",
+]
+dependencies = [
+    "pystray>=0.19.4",
+    "Pillow>=9.0.0",
+]
+
+[project.optional-dependencies]
+unix = [
+    "pynput>=1.7.6",
+]
+
+[project.scripts]
+desktop-spider = "desktop_spider:main"
+desktop-floating = "desktop_spider:main"
+desktop-pet = "desktop_spider:main"
+
+[project.gui-scripts]
+desktop-spider = "desktop_spider:main"
+desktop-floating = "desktop_spider:main"
+desktop-pet = "desktop_spider:main"
+
+[project.urls]
+"Homepage" = "https://github.com/sohaghaldar/desktop-pet-ecosystem"
+"Bug Tracker" = "https://github.com/sohaghaldar/desktop-pet-ecosystem/issues"

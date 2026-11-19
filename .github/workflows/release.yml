@@ -1,0 +1,71 @@
+name: Release Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows Standalone Executable (.exe)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Compile Standalone Executable
+        run: |
+          python build_exe.py
+
+      - name: Create Portable Zip Package
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/DesktopFloatingSpider.exe, settings.json, assets, locales, install.bat, run_spider.bat, README.md -DestinationPath dist/Desktop-Floating-Spider-Portable.zip
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release-assets
+          path: dist/*
+
+  publish-release:
+    name: Publish GitHub Release
+    needs: build-windows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-release-assets
+          path: dist
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/DesktopFloatingSpider.exe
+            dist/Desktop-Floating-Spider-Portable.zip
+            desktop_spider.py
+            VERSION
+          draft: false
+          prerelease: false
+          generate_release_notes: true

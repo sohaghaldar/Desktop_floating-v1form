@@ -27,6 +27,18 @@ try:
 except Exception:
     pass
 
+# Ensure stdout and stderr never raise NoneType errors under pythonw or GUI launchers
+if sys.stdout is None:
+    try:
+        sys.stdout = open(os.devnull, "w", encoding="utf-8")
+    except Exception:
+        pass
+if sys.stderr is None:
+    try:
+        sys.stderr = open(os.devnull, "w", encoding="utf-8")
+    except Exception:
+        pass
+
 APP_VERSION = "2.6.0"
 
 
@@ -3858,7 +3870,9 @@ def main():
             kernel32 = ctypes.windll.kernel32
             # Attach to console if started from CMD or PowerShell
             try:
-                kernel32.AttachConsole(0xFFFFFFFF)
+                if kernel32.AttachConsole(0xFFFFFFFF):
+                    sys.stdout = open("CONOUT$", "w", encoding="utf-8", buffering=1)
+                    sys.stderr = open("CONOUT$", "w", encoding="utf-8", buffering=1)
             except Exception:
                 pass
             handle = kernel32.GetStdHandle(-11)

@@ -25,6 +25,7 @@ from core.platform_helper import (
     PlatformHelper,
     is_hotkey_down,
     enforce_single_instance,
+    kill_running_instance,
     play_audio,
 )
 

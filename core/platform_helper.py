@@ -47,80 +47,90 @@ _instance_lock_handle = None
 
 
 def enforce_single_instance():
-    """Acquire a process lock without terminating another process."""
+    """Ensure exactly one interactive companion runs on desktop, cleanly replacing any prior process."""
     global _instance_lock_handle
-    if IS_WINDOWS:
+    pid_path = os.path.join(tempfile.gettempdir(), "desktop_spider_companion.pid")
+
+    # If a prior instance was registered, terminate it so new launch runs fresh
+    if os.path.exists(pid_path):
         try:
-            kernel32 = ctypes.windll.kernel32
-            kernel32.CreateMutexW.argtypes = [ctypes.c_void_p, ctypes.c_bool, ctypes.c_wchar_p]
-            kernel32.CreateMutexW.restype = ctypes.wintypes.HANDLE
-            handle = kernel32.CreateMutexW(None, True, "DesktopSpiderOverlaySingleInstanceMutex_v2")
-            if not handle:
-                return False
-            if kernel32.GetLastError() == 183:  # ERROR_ALREADY_EXISTS
-                user32 = ctypes.windll.user32
-                found_hwnd = None
-
-                def _enum_cb(h, l):
-                    nonlocal found_hwnd
-                    length = user32.GetWindowTextLengthW(h)
-                    if length > 0:
-                        buf = ctypes.create_unicode_buffer(length + 1)
-                        user32.GetWindowTextW(h, buf, length + 1)
-                        t = buf.value
-                        if "Desktop Spider" in t or "ডেস্কটপ স্পাইডার" in t or "Desktop Pet Ecosystem" in t:
-                            found_hwnd = h
-                            return False
-                    return True
-
-                try:
-                    WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
-                    user32.EnumWindows(WNDENUMPROC(_enum_cb), 0)
-                    if found_hwnd:
-                        user32.ShowWindow(found_hwnd, 9)  # SW_RESTORE
-                        user32.SetForegroundWindow(found_hwnd)
-                except Exception:
-                    pass
-                kernel32.CloseHandle(handle)
-                return False
-            _instance_lock_handle = handle
-            return True
+            with open(pid_path, "r") as f:
+                content = f.read().strip()
+            if content:
+                old_pid = int(content)
+                if old_pid != os.getpid():
+                    if IS_WINDOWS:
+                        try:
+                            kernel32 = ctypes.windll.kernel32
+                            PROCESS_TERMINATE = 0x0001
+                            h_proc = kernel32.OpenProcess(PROCESS_TERMINATE, False, old_pid)
+                            if h_proc:
+                                kernel32.TerminateProcess(h_proc, 0)
+                                kernel32.CloseHandle(h_proc)
+                                time.sleep(0.15)
+                        except Exception:
+                            pass
+                    else:
+                        try:
+                            os.kill(old_pid, 9)
+                            time.sleep(0.15)
+                        except Exception:
+                            pass
         except Exception:
-            # If native mutex setup fails, allow startup rather than killing processes.
-            return True
+            pass
 
+    # Save current process PID
     try:
-        import fcntl
-        lock_path = os.path.join(tempfile.gettempdir(), "desktop_spider_companion.lock")
-        _instance_lock_handle = open(lock_path, "a+")
-        try:
-            fcntl.flock(_instance_lock_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except (BlockingIOError, OSError):
-            _instance_lock_handle.close()
-            _instance_lock_handle = None
+        with open(pid_path, "w") as f:
+            f.write(str(os.getpid()))
+    except Exception:
+        pass
+
+    return True
+
+
+def kill_running_instance():
+    """Stops any currently running desktop companion process."""
+    pid_path = os.path.join(tempfile.gettempdir(), "desktop_spider_companion.pid")
+    if not os.path.exists(pid_path):
+        return False
+    try:
+        with open(pid_path, "r") as f:
+            content = f.read().strip()
+        if not content:
             return False
-        _instance_lock_handle.seek(0)
-        _instance_lock_handle.truncate()
-        _instance_lock_handle.write(str(os.getpid()))
-        _instance_lock_handle.flush()
+        old_pid = int(content)
+        if IS_WINDOWS:
+            kernel32 = ctypes.windll.kernel32
+            PROCESS_TERMINATE = 0x0001
+            h_proc = kernel32.OpenProcess(PROCESS_TERMINATE, False, old_pid)
+            if h_proc:
+                kernel32.TerminateProcess(h_proc, 0)
+                kernel32.CloseHandle(h_proc)
+        else:
+            try:
+                os.kill(old_pid, 9)
+            except ProcessLookupError:
+                pass
+        try:
+            os.remove(pid_path)
+        except Exception:
+            pass
         return True
     except Exception:
-        # A lock failure must not risk terminating an unrelated process.
-        return True
+        return False
 
 
 def _release_instance_lock():
-    global _instance_lock_handle
-    if _instance_lock_handle is not None:
-        try:
-            if IS_WINDOWS:
-                ctypes.windll.kernel32.ReleaseMutex(_instance_lock_handle)
-                ctypes.windll.kernel32.CloseHandle(_instance_lock_handle)
-            else:
-                _instance_lock_handle.close()
-        except Exception:
-            pass
-        _instance_lock_handle = None
+    pid_path = os.path.join(tempfile.gettempdir(), "desktop_spider_companion.pid")
+    try:
+        if os.path.exists(pid_path):
+            with open(pid_path, "r") as f:
+                content = f.read().strip()
+            if content and int(content) == os.getpid():
+                os.remove(pid_path)
+    except Exception:
+        pass
 
 
 atexit.register(_release_instance_lock)

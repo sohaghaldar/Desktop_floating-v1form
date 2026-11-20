@@ -8,15 +8,15 @@
   <img src="https://img.shields.io/badge/License-MIT-ef4444.svg?style=for-the-badge" alt="License" />
 </p>
 
-An ultra-responsive, physics-driven, living **Desktop Floating Companion Ecosystem** designed for **Windows 10/11**, **Linux**, and **macOS**.
+An ultra-responsive, physics-driven, living **Desktop Floating Companion Ecosystem** designed for **Windows 10/11**, **macOS**, and **Linux**.
 
-Currently featuring the **Procedural Cyber Spider** (with genuine orb-web weaving) and the **Graceful Fluttering Butterfly** (with full caterpillar-to-butterfly metamorphosis), alongside an active roadmap of upcoming desktop companions!
+Featuring the **Procedural Cyber Spider** (with genuine orb-web weaving) and the **Graceful Fluttering Butterfly** (with full caterpillar-to-butterfly metamorphosis), alongside an active roadmap of upcoming desktop companions!
 
 The transparent overlay runs silently and non-intrusively across your active wallpaper, browser, code editors, and full-screen media with **100% transparent click-through mechanics (`WS_EX_TRANSPARENT`)**, zero taskbar clutter, 24/7 system tray controls, a sleek dark-glass live settings customizer (`Shift + P`), and an integrated **GitHub Auto-Updater with real-time Megabyte (MB) download progress**!
 
 ---
 
-## 🖥️ Live Desktop Demo & Visual Showcase (ভিজ্যুয়াল ডেক্সটপ ডেমো)
+## 🖥️ Live Desktop Demo & Visual Showcase
 
 ### 🕷️ Authentic Live Spider & Web Architecture on Desktop
 <p align="center">
@@ -28,13 +28,30 @@ The transparent overlay runs silently and non-intrusively across your active wal
   <img src="https://raw.githubusercontent.com/sohaghaldar/Desktop_floating-v1form/main/assets/preview.svg" alt="Desktop Floating Vector Preview" width="100%" />
 </p>
 
-> **💡 Zero Desktop Interference**: All companions float seamlessly over your wallpaper, code editors, games, and YouTube videos without intercepting mouse clicks, dragging, or keystrokes!
+> [!TIP]
+> **Zero Desktop Interference**: All companions float effortlessly over your wallpaper, code editors, games, and videos without blocking clicks, dragging, or keystrokes!
+
+---
+
+## 🌐 Cross-Platform OS Compatibility
+
+Desktop Floating is architected with cross-platform abstraction layers for native performance on all major desktop operating systems:
+
+| Operating System | Recommended Launch Method | Supported Formats | Native Click-Through |
+| :--- | :--- | :--- | :---: |
+| 🪟 **Windows 10 / 11** | **[Download Standalone .EXE](https://github.com/sohaghaldar/Desktop_floating-v1form/releases)** or `pip install desktop-floating` | Standalone `.exe`, `.zip`, `pip` | ✅ Win32 Layered |
+| 🍎 **macOS (Intel & M-Series)** | `pip3 install desktop-floating` | Python Wheel, Source | ✅ Cocoa Native Canvas |
+| 🐧 **Linux (Ubuntu, Arch, Fedora)** | `pip install desktop-floating` or `./install.sh` | Python Wheel, Shell Script | ✅ X11 / Picom RGBA |
+
+> [!IMPORTANT]
+> **Understanding File Types Across Operating Systems:**  
+> The `.exe` download is a native Windows binary format designed specifically for Windows 10 and 11. macOS and Linux systems do not use `.exe` files natively. Instead, Mac and Linux users install Desktop Floating directly with one simple command: `pip install desktop-floating` (or run `./run.sh`). The app looks and performs identically across all three platforms!
 
 ---
 
 ## 💻 Terminal & Command Prompt Experience
 
-When you launch `desktop-floating` in your terminal (CMD / PowerShell / Bash / Zsh), it greets you with an illuminated glowing cyber banner and instant quick-reference hotkeys:
+When you run `desktop-floating` in your terminal (CMD, PowerShell, Bash, or Zsh), it greets you with an illuminated glowing cyber banner and instant quick-reference hotkeys:
 
 ```text
   ███████╗██╗      ██████╗  █████╗ ████████╗██╗███╗   ██╗ ██████╗ 
@@ -59,11 +76,24 @@ When you launch `desktop-floating` in your terminal (CMD / PowerShell / Bash / Z
   ----------------------------------------------------------------------
 ```
 
-If an instance is already active on your desktop, running `desktop-floating` in CMD alerts you without launching duplicates, guiding you directly to your hotkeys and system tray controls.
+### CLI Command Options
+```bash
+# Launch or restart living companion on your desktop
+desktop-floating
+
+# Safely close any active companion
+desktop-floating --kill
+
+# Display instant help and hotkeys
+desktop-floating --help
+
+# Show installed version
+desktop-floating --version
+```
 
 ---
 
-## 🐾 Living Companions Showcase (প্রাণীসমূহ)
+## 🐾 Living Companions Showcase
 
 <table>
   <tr>
@@ -90,7 +120,7 @@ If an instance is already active on your desktop, running `desktop-floating` in 
   </tr>
 </table>
 
-### 🔮 3. Upcoming Companions Expansion Roadmap (পরবর্তী প্রাণীসমূহ)
+### 🔮 3. Upcoming Companions Expansion Roadmap
 Desktop Floating is built on an extensible creature engine. New companions will be introduced through seamless auto-updates:
 
 * 🦚 **Royal Crested Bird & Chick Nest**: High-altitude branch/nest building, parent-chick feeding, and flocking glide flight.
@@ -100,60 +130,72 @@ Desktop Floating is built on an extensible creature engine. New companions will 
 
 ---
 
-## 🌐 Cross-Platform Operating System Support (Windows | macOS | Linux)
+## 📥 Detailed Installation Guide
 
-Desktop Floating is architected with cross-platform abstraction layers for native performance on all major desktop operating systems:
+Choose your operating system below:
 
-### 🪟 Windows 10 & Windows 11
-* **Seamless Zero-Flicker Transparency:** Powered by native Win32 `SetWindowLongPtr` with `WS_EX_LAYERED | WS_EX_TRANSPARENT`.
-* **Zero Taskbar Clutter:** Runs with `WS_EX_TOOLWINDOW` so your taskbar remains completely clean.
-* **24/7 System Tray Icon:** Integrated in the notification area beside the Windows clock for quick menu and settings.
-* **Launch Options:** 
-  - Standalone single-file **`DesktopFloatingSpider.exe`** (no Python required).
-  - CLI via **`pip install desktop-floating`**.
-  - One-click script via **`run_spider.bat`**.
+### 🪟 Windows 10 & 11
+
+#### Method A: Standalone Executable (Fastest — No Python Required)
+1. Download **`DesktopFloatingSpider.exe`** from the [GitHub Releases](https://github.com/sohaghaldar/Desktop_floating-v1form/releases) page.
+2. Double-click the file to launch immediately!
+3. Your settings are automatically saved in `settings.json` next to the executable.
+
+#### Method B: Install via Pip
+```bash
+pip install desktop-floating
+desktop-floating
+```
+
+#### Method C: One-Click Windows Script
+Double-click **`install.bat`** (or **`run_spider.bat`**) inside the repository folder.
 
 ---
 
 ### 🍎 macOS (Apple Silicon M1/M2/M3 & Intel)
-* **High-Performance Canvas:** Utilizes macOS Cocoa transparent canvas (`-transparent 1` with `NSWindowCollectionBehaviorCanJoinAllSpaces`).
-* **Multi-Desktop Spaces:** Seamlessly floats across all macOS Mission Control Spaces and Fullscreen apps.
-* **Installation via Pip:**
-  ```bash
-  pip3 install desktop-floating
-  desktop-floating
-  ```
-* **Hotkey Accessibility Permission:**  
-  On macOS, global background hotkeys require Accessibility permission:  
-  *Open `System Settings` ➜ `Privacy & Security` ➜ `Accessibility` ➜ Check your `Terminal` or `Python`.*
+
+#### 1. Install via Pip:
+```bash
+pip3 install desktop-floating
+desktop-floating
+```
+
+#### 2. Enable Accessibility Permission:
+To allow global background hotkeys (`Shift + P`, `Shift + M`) on macOS:
+1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
+2. Turn ON the toggle next to **Terminal** (or **Python**).
 
 ---
 
-### 🐧 Linux (Ubuntu, Debian, Arch, Fedora, Manjaro)
-* **True RGBA Transparency:** Fully compatible with X11 composite window managers (**Picom**, **Compton**, **Mutter**, **KWin**).
-* **Single-Instance Lock:** Native kernel file locks (`fcntl.flock`) prevent duplicate background processes.
-* **Prerequisites (Tkinter):**
-  ```bash
-  # Ubuntu / Debian / Linux Mint
-  sudo apt update && sudo apt install -y python3-tk
+### 🐧 Linux (Ubuntu, Debian, Arch, Fedora)
 
-  # Arch Linux / Manjaro
-  sudo pacman -S tk
+#### 1. Ensure Tkinter is installed:
+```bash
+# Ubuntu / Debian / Linux Mint
+sudo apt update && sudo apt install -y python3-tk
 
-  # Fedora / RHEL
-  sudo dnf install python3-tkinter
-  ```
-* **Installation via Pip & Launch:**
-  ```bash
-  pip install desktop-floating
-  desktop-floating
-  ```
-* **One-Click Linux Shell Scripts:**
-  ```bash
-  chmod +x install.sh run.sh
-  ./install.sh
-  ./run.sh
-  ```
+# Arch Linux / Manjaro
+sudo pacman -S tk
+
+# Fedora / RHEL
+sudo dnf install python3-tkinter
+```
+
+#### 2. Install and launch:
+```bash
+pip install desktop-floating
+desktop-floating
+```
+
+#### 3. Or use the one-click shell scripts:
+```bash
+chmod +x install.sh run.sh
+./install.sh
+./run.sh
+```
+
+> [!NOTE]
+> On Linux, a composite window manager such as **Picom**, **Compton**, **Mutter**, or **KWin** is recommended for hardware-accelerated RGBA desktop transparency.
 
 ---
 
@@ -163,12 +205,12 @@ Desktop Floating is architected with cross-platform abstraction layers for nativ
   - Run immediately on any Windows PC without installing Python, Git, or dependencies!
   - Fully persistent settings (`settings.json` stays alongside the executable).
 - **🪟 Clean Taskbar & 24/7 Tray Integration**:
-  - The transparent overlay runs with `WS_EX_TOOLWINDOW`—zero taskbar buttons to clutter your taskbar.
+  - The transparent overlay runs with `WS_EX_TOOLWINDOW`—zero taskbar buttons to clutter your screen.
   - The Taskbar button only appears while the **Live Settings & Customizer** window is open.
   - Dedicated **Cyber Companion icon** in the Windows System Tray (near the clock) for instant right-click menu controls.
 - **🔄 GitHub Live Auto-Updater with MB Counter**:
-  - Automatically notifies users when a new release is available on GitHub.
-  - Live progress display with exact download metrics: `Downloading: 12.4 MB / 31.2 MB (40%)`.
+  - Automatically queries GitHub releases and notifies you when an update is available.
+  - Real-time download progress display: `Downloading: 12.4 MB / 31.2 MB (40%)`.
   - Atomic update application with syntax validation and instant auto-restart.
 - **💡 First-Run Guidance & What's New Notifications**:
   - Displays a sleek on-screen cyber card with key shortcuts upon first launch.
@@ -194,72 +236,13 @@ All hotkeys can be customized inside the **Live Settings Customizer** (`Shift + 
 | **`Shift + B`** | **Bungee Jump (Spider) / Stardust Burst (Butterfly)** | **বাঞ্জি ড্রপ (মাকড়সা) / ফেয়ারি ডাস্ট বিচ্ছুরণ (প্রজাপতি)** |
 | **`Shift + T`** | **Cycle Color Themes** | **সাইবার রঙের থিম পরিবর্তন করুন** |
 | **`Shift + W`** | **Cycle Model / Wings / Anatomy** | **প্রাণীর শারীরিক গঠন/ডানার স্টাইল পরিবর্তন** |
-| **`Shift + \``** | **Relocate Web / Cocoon Anchor** | **মাউস দিয়ে জাল বা কোকুনের অবস্থান পরিবর্তন** |
+| **`Shift + ` `** | **Relocate Web / Cocoon Anchor** | **মাউস দিয়ে জাল বা কোকুনের অবস্থান পরিবর্তন** |
 | **`Shift + C`** | **Restart Entrance Lifecycle** | **নতুন করে সিলিং থেকে নেমে জাল তৈরি শুরু** |
 | **`Shift + Q`** | **Set Ceiling Entry Point** | **সিলিং এন্ট্রি পয়েন্ট নির্ধারণ করুন** |
 | **`Shift + H`** | **Hatch Spiderling Babies** | **ডিম ফুটে পিঠে মাকড়সার বাচ্চা বের করুন** |
 | **`Shift + R`** | **Trigger Instant Health Break** | **স্বাস্থ্য সচেতনতা বিরতি কার্ড প্রদর্শন** |
 | **`Shift + S`** | **Toggle Sound Effects (ON/OFF)** | **শব্দ বা সাউন্ড চালু/বন্ধ করুন** |
 | **`Shift + ESC`** | **Safely Exit Application** | **অ্যাপ্লিকেশনটি সম্পূর্ণ বন্ধ করুন** |
-
----
-
-## 📥 Installation & Running (ইনস্টলেশন ও চালনা)
-
-Choose any of the following 4 easy methods:
-
-### Option 1: Standalone Portable `.exe` (Recommended for Any Windows PC)
-> **No Python, Git, or command line required!**
-1. Download `DesktopFloatingSpider.exe` from the [Releases](https://github.com/sohaghaldar/Desktop_floating-v1form/releases) page (or `Desktop-Floating-Spider-v2.6.0-Portable.zip`).
-2. Double-click `DesktopFloatingSpider.exe` to run immediately!
-3. All your customized settings are automatically saved in `settings.json` next to the executable.
-
----
-
-### Option 2: Install via `pip` (Cross-Platform)
-Install directly into your Python environment as a standard CLI package:
-
-```bash
-pip install desktop-floating
-```
-
-Launch anywhere from CMD / PowerShell / Terminal:
-```bash
-desktop-floating
-# or
-desktop-float
-# or
-desktop-spider
-```
-
----
-
-### Option 3: Interactive Installer (`install.bat` / `install.sh`)
-* **On Windows:** Double-click **`install.bat`** (or run `python setup_interactive.py` in CMD).
-* **On Linux / macOS:** Run `chmod +x install.sh && ./install.sh`.
-
-The interactive installer will:
-1. Check your Python environment.
-2. Ask permission before installing required dependencies (`Pillow`, `pystray`).
-3. Create desktop shortcuts with custom cyber icons.
-4. Launch Desktop Floating in the background!
-
----
-
-### Option 4: Traditional Source Run
-```bash
-# Clone the repository
-git clone https://github.com/sohaghaldar/Desktop_floating-v1form.git
-cd Desktop_floating-v1form
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run silently in background (Windows)
-run_spider.bat
-# or direct python:
-python desktop_spider.py
-```
 
 ---
 

@@ -135,6 +135,7 @@ from core.platform_helper import (
     PlatformHelper,
     is_hotkey_down,
     enforce_single_instance,
+    kill_running_instance,
     play_audio,
 )
 
@@ -3891,19 +3892,29 @@ def main():
         except Exception:
             pass
 
-    if not enforce_single_instance():
-        print("\033[93m  📍 Status: ALREADY RUNNING & ACTIVE ON YOUR DESKTOP!\033[0m", flush=True)
-        print("\033[90m  💡 To control your active companion:", flush=True)
-        print("     - Press [Shift + P] to open Live Settings & Customizer", flush=True)
-        print("     - Press [Shift + M] to switch between Spider and Butterfly", flush=True)
-        print("     - Check the System Tray icon near your clock for Quick Menu & Exit\033[0m\n", flush=True)
-        try:
-            sys.stdout.flush()
-        except Exception:
-            pass
+    args = [a.lower() for a in sys.argv[1:]]
+    if "-k" in args or "--kill" in args or "--stop" in args:
+        if kill_running_instance():
+            print("\033[93m  🛑 Stopped active Desktop Floating companion.\033[0m", flush=True)
+        else:
+            print("\033[90m  ℹ️ No active Desktop Floating companion was found.\033[0m", flush=True)
         return
 
-    print("\033[92m  📍 Status: Starting up... 100% transparent click-through on desktop!\033[0m", flush=True)
+    if "-v" in args or "--version" in args:
+        print(f"Desktop Floating v1.0.0 (Engine v{APP_VERSION})", flush=True)
+        return
+
+    if "-h" in args or "--help" in args:
+        print("\n  Usage:")
+        print("    desktop-floating           Start or restart living companion on desktop")
+        print("    desktop-floating --kill    Safely stop running companion")
+        print("    desktop-floating --help    Show help & hotkeys")
+        print("    desktop-floating --version Show version\n", flush=True)
+        return
+
+    enforce_single_instance()
+
+    print("\033[92m  📍 Status: Active & Running! 100% transparent click-through on desktop!\033[0m", flush=True)
     print("\033[90m  💡 Tip: Check the bottom-right tray icon near your clock for quick menu.\033[0m\n", flush=True)
     try:
         sys.stdout.flush()

@@ -135,6 +135,7 @@ from core.platform_helper import (
     PlatformHelper,
     is_hotkey_down,
     enforce_single_instance,
+    is_instance_running,
     kill_running_instance,
     play_audio,
 )
@@ -3907,15 +3908,38 @@ def main():
     if "-h" in args or "--help" in args:
         print("\n  Usage:")
         print("    desktop-floating              Launch companion detached in background")
+        print("    desktop-floating --restart    Restart companion from ceiling")
         print("    desktop-floating --foreground Run attached directly inside CMD")
         print("    desktop-floating --kill       Safely stop running companion")
         print("    desktop-floating --help       Show help & hotkeys")
         print("    desktop-floating --version    Show version\n", flush=True)
         return
 
+    is_worker = ("--worker" in args or "--foreground" in args or "-f" in args)
+    force_restart = ("--restart" in args or "-r" in args)
+
+    # Check if a companion is already active on desktop
+    running, running_pid = is_instance_running()
+    if running and not is_worker and not force_restart:
+        print(f"\033[93m  📍 Status: ALREADY RUNNING & ACTIVE ON YOUR DESKTOP! (PID: {running_pid})\033[0m", flush=True)
+        print("\033[97m  💡 Your companion is floating right now! Use:\033[0m", flush=True)
+        print("     - Press [Shift + P] to open Live Settings & Customizer", flush=True)
+        print("     - Press [Shift + M] to switch species (Spider ↔ Butterfly)", flush=True)
+        print("     - Run `desktop-floating --restart` to restart fresh", flush=True)
+        print("     - Run `desktop-floating --kill` to stop companion\033[0m\n", flush=True)
+        try:
+            sys.stdout.flush()
+        except Exception:
+            pass
+        return
+
+    # If force restart requested and running, terminate previous process first
+    if force_restart and running:
+        kill_running_instance()
+        time.sleep(0.2)
+
     # If executed from an interactive Windows console (CMD/PowerShell), launch detached
     # so the user can close the CMD window without killing the floating companion!
-    is_worker = ("--worker" in args or "--foreground" in args or "-f" in args)
     if IS_WINDOWS and not is_worker:
         if not sys.executable.lower().endswith("pythonw.exe"):
             enforce_single_instance()

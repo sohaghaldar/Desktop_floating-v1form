@@ -46,6 +46,51 @@ else:
 _instance_lock_handle = None
 
 
+def is_instance_running():
+    """Checks whether another companion process is currently active on the desktop."""
+    pid_path = os.path.join(tempfile.gettempdir(), "desktop_spider_companion.pid")
+    if not os.path.exists(pid_path):
+        return False, None
+    try:
+        with open(pid_path, "r") as f:
+            content = f.read().strip()
+        if not content:
+            return False, None
+        old_pid = int(content)
+        if old_pid == os.getpid():
+            return False, None
+
+        if IS_WINDOWS:
+            kernel32 = ctypes.windll.kernel32
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            h_proc = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, old_pid)
+            if h_proc:
+                exit_code = ctypes.c_ulong()
+                kernel32.GetExitCodeProcess(h_proc, ctypes.byref(exit_code))
+                kernel32.CloseHandle(h_proc)
+                STILL_ACTIVE = 259
+                if exit_code.value == STILL_ACTIVE:
+                    return True, old_pid
+            # If not active, clean up stale pid file
+            try:
+                os.remove(pid_path)
+            except Exception:
+                pass
+            return False, None
+        else:
+            try:
+                os.kill(old_pid, 0)
+                return True, old_pid
+            except (ProcessLookupError, PermissionError):
+                try:
+                    os.remove(pid_path)
+                except Exception:
+                    pass
+                return False, None
+    except Exception:
+        return False, None
+
+
 def enforce_single_instance():
     """Ensure exactly one interactive companion runs on desktop, cleanly replacing any prior process."""
     global _instance_lock_handle

@@ -73,17 +73,16 @@ def enforce_single_instance():
                             return False
                     return True
 
-                WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
-                user32.EnumWindows(WNDENUMPROC(_enum_cb), 0)
-                if found_hwnd:
-                    user32.ShowWindow(found_hwnd, 9)  # SW_RESTORE
-                    user32.SetForegroundWindow(found_hwnd)
-                    kernel32.CloseHandle(handle)
-                    return False
-                # If no active window exists, an orphaned headless background process held it.
-                # Allow proceeding so the user is never blocked from launching!
+                try:
+                    WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
+                    user32.EnumWindows(WNDENUMPROC(_enum_cb), 0)
+                    if found_hwnd:
+                        user32.ShowWindow(found_hwnd, 9)  # SW_RESTORE
+                        user32.SetForegroundWindow(found_hwnd)
+                except Exception:
+                    pass
                 kernel32.CloseHandle(handle)
-                return True
+                return False
             _instance_lock_handle = handle
             return True
         except Exception:

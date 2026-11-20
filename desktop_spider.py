@@ -3831,10 +3831,6 @@ class DesktopSpiderApp:
 
 
 def main():
-    if not enforce_single_instance():
-        print("[!] Desktop Floating is already active and running on your desktop.")
-        return
-
     banner = """\033[96m
   ███████╗██╗      ██████╗  █████╗ ████████╗██╗███╗   ██╗ ██████╗ 
   ██╔════╝██║     ██╔═══██╗██╔══██╗╚══██╔══╝██║████╗  ██║██╔════╝ 
@@ -3855,24 +3851,50 @@ def main():
 \033[97m     [Shift + T]\033[0m Cycle Cyber Color Themes
 \033[97m     [Shift + `]\033[0m Relocate Web / Cocoon Anchor
 \033[97m     [Shift + ESC]\033[0m Safely Exit Pet & Application
-\033[36m  ----------------------------------------------------------------------\033[0m
-\033[96m  📍 Status: Running 100% transparent click-through on desktop!\033[0m
-\033[90m  💡 Tip: Check the bottom-right tray icon near your clock for quick menu.\033[0m
-"""
+\033[36m  ----------------------------------------------------------------------\033[0m"""
     try:
         if IS_WINDOWS:
             import ctypes
             kernel32 = ctypes.windll.kernel32
+            # Attach to console if started from CMD or PowerShell
+            try:
+                kernel32.AttachConsole(0xFFFFFFFF)
+            except Exception:
+                pass
             handle = kernel32.GetStdHandle(-11)
             mode = ctypes.c_ulong()
             if kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
                 kernel32.SetConsoleMode(handle, mode.value | 0x0004)
-        print(banner)
+        print(banner, flush=True)
+        sys.stdout.flush()
     except Exception:
         clean_banner = banner
         for code in ["\033[96m", "\033[0m", "\033[93m", "\033[97m", "\033[90m", "\033[36m", "\033[92m"]:
             clean_banner = clean_banner.replace(code, "")
-        print(clean_banner)
+        try:
+            print(clean_banner, flush=True)
+            sys.stdout.flush()
+        except Exception:
+            pass
+
+    if not enforce_single_instance():
+        print("\033[93m  📍 Status: ALREADY RUNNING & ACTIVE ON YOUR DESKTOP!\033[0m", flush=True)
+        print("\033[90m  💡 To control your active companion:", flush=True)
+        print("     - Press [Shift + P] to open Live Settings & Customizer", flush=True)
+        print("     - Press [Shift + M] to switch between Spider and Butterfly", flush=True)
+        print("     - Check the System Tray icon near your clock for Quick Menu & Exit\033[0m\n", flush=True)
+        try:
+            sys.stdout.flush()
+        except Exception:
+            pass
+        return
+
+    print("\033[92m  📍 Status: Starting up... 100% transparent click-through on desktop!\033[0m", flush=True)
+    print("\033[90m  💡 Tip: Check the bottom-right tray icon near your clock for quick menu.\033[0m\n", flush=True)
+    try:
+        sys.stdout.flush()
+    except Exception:
+        pass
 
     app = DesktopSpiderApp()
     app.root.mainloop()

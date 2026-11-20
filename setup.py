@@ -31,12 +31,15 @@ setup(
         ],
     },
     entry_points={
-        "gui_scripts": [
+        "console_scripts": [
             "desktop-floating=desktop_spider:main",
             "desktop-float=desktop_spider:main",
             "desktop-spider=desktop_spider:main",
             "desktop_floating=desktop_spider:main",
             "desktop-pet=desktop_spider:main",
+        ],
+        "gui_scripts": [
+            "desktop-floating-silent=desktop_spider:main",
         ],
     },
     classifiers=[

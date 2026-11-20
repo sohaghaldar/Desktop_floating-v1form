@@ -49,11 +49,7 @@ desktop_floating = "desktop_spider:main"
 desktop-pet = "desktop_spider:main"
 
 [project.gui-scripts]
-desktop-floating = "desktop_spider:main"
-desktop-float = "desktop_spider:main"
-desktop-spider = "desktop_spider:main"
-desktop_floating = "desktop_spider:main"
-desktop-pet = "desktop_spider:main"
+desktop-floating-silent = "desktop_spider:main"
 
 [project.urls]
 "Homepage" = "https://github.com/sohaghaldar/Desktop_floating-v1form"

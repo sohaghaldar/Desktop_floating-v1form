@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "desktop-spider"
-version = "2.6.0"
+name = "desktop-floating"
+version = "1.0.0"
 authors = [
   { name="Sohag Haldar", email="sohaghaldar@users.noreply.github.com" },
 ]
@@ -42,15 +42,19 @@ unix = [
 ]
 
 [project.scripts]
-desktop-spider = "desktop_spider:main"
 desktop-floating = "desktop_spider:main"
+desktop-float = "desktop_spider:main"
+desktop-spider = "desktop_spider:main"
+desktop_floating = "desktop_spider:main"
 desktop-pet = "desktop_spider:main"
 
 [project.gui-scripts]
-desktop-spider = "desktop_spider:main"
 desktop-floating = "desktop_spider:main"
+desktop-float = "desktop_spider:main"
+desktop-spider = "desktop_spider:main"
+desktop_floating = "desktop_spider:main"
 desktop-pet = "desktop_spider:main"
 
 [project.urls]
-"Homepage" = "https://github.com/sohaghaldar/desktop-pet-ecosystem"
-"Bug Tracker" = "https://github.com/sohaghaldar/desktop-pet-ecosystem/issues"
+"Homepage" = "https://github.com/sohaghaldar/Desktop_floating-v1form"
+"Bug Tracker" = "https://github.com/sohaghaldar/Desktop_floating-v1form/issues"

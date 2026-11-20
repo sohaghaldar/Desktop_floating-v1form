@@ -53,5 +53,7 @@
   "GECKO_COLOR_INDEX": 0,
   "GECKO_SCALE": 1.15,
   "GECKO_X": 720.0,
-  "GECKO_Y": 400.0
+  "GECKO_Y": 400.0,
+  "FIRST_RUN_SHOWN": true,
+  "LAST_SEEN_VERSION": "2.6.0"
 }

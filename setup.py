@@ -7,14 +7,14 @@ if os.path.exists("README.md"):
         readme_content = f.read()
 
 setup(
-    name="desktop-spider",
-    version="2.6.0",
+    name="desktop-floating",
+    version="1.0.0",
     author="Sohag Haldar",
     author_email="sohaghaldar@users.noreply.github.com",
     description="Interactive, physics-driven cross-platform desktop spider & floating pet ecosystem for Windows, Linux, and macOS.",
     long_description=readme_content,
     long_description_content_type="text/markdown",
-    url="https://github.com/sohaghaldar/desktop-pet-ecosystem",
+    url="https://github.com/sohaghaldar/Desktop_floating-v1form",
     py_modules=["desktop_spider"],
     packages=find_packages(),
     include_package_data=True,
@@ -32,8 +32,10 @@ setup(
     },
     entry_points={
         "gui_scripts": [
-            "desktop-spider=desktop_spider:main",
             "desktop-floating=desktop_spider:main",
+            "desktop-float=desktop_spider:main",
+            "desktop-spider=desktop_spider:main",
+            "desktop_floating=desktop_spider:main",
             "desktop-pet=desktop_spider:main",
         ],
     },

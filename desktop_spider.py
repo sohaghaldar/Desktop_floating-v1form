@@ -3832,11 +3832,48 @@ class DesktopSpiderApp:
 
 def main():
     if not enforce_single_instance():
-        print("Desktop Pet Ecosystem is already running.")
+        print("[!] Desktop Floating is already active and running on your desktop.")
         return
-    print("=" * 76)
-    print(" [*] Desktop Spider Overlay Running (Modular Cross-Platform Edition)!")
-    print("=" * 76)
+
+    banner = """\033[96m
+  ███████╗██╗      ██████╗  █████╗ ████████╗██╗███╗   ██╗ ██████╗ 
+  ██╔════╝██║     ██╔═══██╗██╔══██╗╚══██╔══╝██║████╗  ██║██╔════╝ 
+  █████╗  ██║     ██║   ██║███████║   ██║   ██║██╔██╗ ██║██║  ███╗
+  ██╔══╝  ██║     ██║   ██║██╔══██║   ██║   ██║██║╚██╗██║██║   ██║
+  ██║     ███████╗╚██████╔╝██║  ██║   ██║   ██║██║ ╚████║╚██████╔╝
+  ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝\033[0m
+\033[93m                 D E S K T O P   F L O A T I N G\033[0m
+
+\033[97m  ✨ Living Cyber Pet Ecosystem (Spider 🕷️, Butterfly 🦋, and more!)\033[0m
+\033[90m  ⚡ Version: 1.0.0 | Author: Sohag Haldar | License: MIT\033[0m
+\033[36m  ----------------------------------------------------------------------\033[0m
+\033[92m  🎮 QUICK SHORTCUTS:\033[0m
+\033[97m     [Shift + M]\033[0m Switch Companion (Spider ↔ Butterfly)
+\033[97m     [Shift + P]\033[0m Open Live Settings & Customizer
+\033[97m     [Shift + F]\033[0m Spawn Prey Fly / Fresh Leaf
+\033[97m     [Shift + B]\033[0m Bungee Jump (Spider) / Stardust Burst (Butterfly)
+\033[97m     [Shift + T]\033[0m Cycle Cyber Color Themes
+\033[97m     [Shift + `]\033[0m Relocate Web / Cocoon Anchor
+\033[97m     [Shift + ESC]\033[0m Safely Exit Pet & Application
+\033[36m  ----------------------------------------------------------------------\033[0m
+\033[96m  📍 Status: Running 100% transparent click-through on desktop!\033[0m
+\033[90m  💡 Tip: Check the bottom-right tray icon near your clock for quick menu.\033[0m
+"""
+    try:
+        if IS_WINDOWS:
+            import ctypes
+            kernel32 = ctypes.windll.kernel32
+            handle = kernel32.GetStdHandle(-11)
+            mode = ctypes.c_ulong()
+            if kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
+                kernel32.SetConsoleMode(handle, mode.value | 0x0004)
+        print(banner)
+    except Exception:
+        clean_banner = banner
+        for code in ["\033[96m", "\033[0m", "\033[93m", "\033[97m", "\033[90m", "\033[36m", "\033[92m"]:
+            clean_banner = clean_banner.replace(code, "")
+        print(clean_banner)
+
     app = DesktopSpiderApp()
     app.root.mainloop()
 

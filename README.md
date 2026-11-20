@@ -19,7 +19,7 @@ The overlay runs seamlessly across your active wallpaper, browser, and games wit
 ## 🖥️ Visual Desktop Preview (ভিজ্যুয়াল ডেক্সটপ ডেমো)
 
 <p align="center">
-  <img src="assets/preview.svg" alt="Desktop Floating Preview" width="100%" />
+  <img src="https://raw.githubusercontent.com/sohaghaldar/Desktop_floating-v1form/main/assets/preview.svg" alt="Desktop Floating Preview" width="100%" />
 </p>
 
 > **💡 Zero Desktop Interference**: All companions float effortlessly over your wallpaper, code editors, and YouTube videos without blocking mouse clicks or typing!

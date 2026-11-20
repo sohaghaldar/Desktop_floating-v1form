@@ -3906,11 +3906,39 @@ def main():
 
     if "-h" in args or "--help" in args:
         print("\n  Usage:")
-        print("    desktop-floating           Start or restart living companion on desktop")
-        print("    desktop-floating --kill    Safely stop running companion")
-        print("    desktop-floating --help    Show help & hotkeys")
-        print("    desktop-floating --version Show version\n", flush=True)
+        print("    desktop-floating              Launch companion detached in background")
+        print("    desktop-floating --foreground Run attached directly inside CMD")
+        print("    desktop-floating --kill       Safely stop running companion")
+        print("    desktop-floating --help       Show help & hotkeys")
+        print("    desktop-floating --version    Show version\n", flush=True)
         return
+
+    # If executed from an interactive Windows console (CMD/PowerShell), launch detached
+    # so the user can close the CMD window without killing the floating companion!
+    is_worker = ("--worker" in args or "--foreground" in args or "-f" in args)
+    if IS_WINDOWS and not is_worker:
+        if not sys.executable.lower().endswith("pythonw.exe"):
+            enforce_single_instance()
+            pyw = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
+            if not os.path.exists(pyw):
+                pyw = sys.executable
+
+            script_path = os.path.abspath(__file__)
+            DETACHED_PROCESS = 0x00000008
+            CREATE_NEW_PROCESS_GROUP = 0x00000200
+
+            try:
+                import subprocess
+                subprocess.Popen(
+                    [pyw, script_path, "--worker"],
+                    creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP,
+                    close_fds=True
+                )
+                print("\033[92m  📍 Status: Launched seamlessly in background!\033[0m", flush=True)
+                print("\033[90m  💡 You can safely close this CMD window anytime—your companion will stay floating!\033[0m\n", flush=True)
+                return
+            except Exception:
+                pass
 
     enforce_single_instance()
 

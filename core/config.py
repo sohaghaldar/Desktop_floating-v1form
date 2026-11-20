@@ -15,6 +15,16 @@ IS_MACOS = (sys.platform == "darwin")
 IS_LINUX = sys.platform.startswith("linux")
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+appdata_dir = os.path.join(os.environ.get('APPDATA', os.path.expanduser('~')), 'DesktopFloatingSpider')
+try:
+    os.makedirs(appdata_dir, exist_ok=True)
+except Exception:
+    pass
+APPDATA_SETTINGS = os.path.join(appdata_dir, "settings.json")
+
+# Source repo settings path if present
+SOURCE_SETTINGS = r"D:\Python programe\Example\spider or etc\settings.json"
+
 if getattr(sys, 'frozen', False):
     BUNDLE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(sys.executable))
     ROOT_DIR = BUNDLE_DIR
@@ -27,11 +37,35 @@ if getattr(sys, 'frozen', False):
         os.remove(test_file)
         SETTINGS_FILE = os.path.join(exe_dir, "settings.json")
     except Exception:
-        appdata_dir = os.path.join(os.environ.get('APPDATA', os.path.expanduser('~')), 'DesktopFloatingSpider')
-        os.makedirs(appdata_dir, exist_ok=True)
-        SETTINGS_FILE = os.path.join(appdata_dir, "settings.json")
+        SETTINGS_FILE = APPDATA_SETTINGS
 else:
-    SETTINGS_FILE = os.path.join(ROOT_DIR, "settings.json")
+    if "site-packages" in ROOT_DIR.lower() or "dist-packages" in ROOT_DIR.lower():
+        SETTINGS_FILE = APPDATA_SETTINGS
+    else:
+        SETTINGS_FILE = os.path.join(ROOT_DIR, "settings.json")
+
+# Ensure user settings exist by seeding from source or AppData
+if not os.path.exists(SETTINGS_FILE):
+    import shutil
+    if os.path.exists(SOURCE_SETTINGS):
+        try:
+            shutil.copy2(SOURCE_SETTINGS, SETTINGS_FILE)
+        except Exception:
+            pass
+    elif os.path.exists(APPDATA_SETTINGS) and SETTINGS_FILE != APPDATA_SETTINGS:
+        try:
+            shutil.copy2(APPDATA_SETTINGS, SETTINGS_FILE)
+        except Exception:
+            pass
+
+if not os.path.exists(APPDATA_SETTINGS):
+    import shutil
+    src = SOURCE_SETTINGS if os.path.exists(SOURCE_SETTINGS) else SETTINGS_FILE
+    if os.path.exists(src):
+        try:
+            shutil.copy2(src, APPDATA_SETTINGS)
+        except Exception:
+            pass
 
 LOCALES_DIR = os.path.join(ROOT_DIR, "locales")
 
@@ -306,6 +340,21 @@ def save_full_settings(settings_dict):
             os.replace(tmp_file, SETTINGS_FILE)
         else:
             os.rename(tmp_file, SETTINGS_FILE)
+
+        # Mirror write to AppData and source settings so custom coordinates never get lost
+        for mirror_path in [APPDATA_SETTINGS, SOURCE_SETTINGS]:
+            if mirror_path and mirror_path != SETTINGS_FILE:
+                try:
+                    if os.path.exists(os.path.dirname(mirror_path)):
+                        m_tmp = mirror_path + ".tmp"
+                        with open(m_tmp, "w", encoding="utf-8") as mf:
+                            json.dump(existing, mf, indent=2, ensure_ascii=False)
+                        if os.path.exists(mirror_path):
+                            os.replace(m_tmp, mirror_path)
+                        else:
+                            os.rename(m_tmp, mirror_path)
+                except Exception:
+                    pass
     except Exception as e:
         print("[!] Error writing settings.json:", e)
 

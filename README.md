@@ -1,10 +1,10 @@
-# 🌌 Desktop Floating (ডেস্কটপ ফ্লোটিং — Living Desktop Companions)
+# 🌌 Desktop Floating (Living Desktop Companions)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-1.0.0%20%7C%202.6.0-00f5d4.svg?style=for-the-badge&logo=github" alt="Version" />
-  <img src="https://img.shields.io/badge/Platform-Windows%2010%2F11%20%7C%20Linux%20%7C%20macOS-38bdf8.svg?style=for-the-badge&logo=windows" alt="Platforms" />
+  <img src="https://img.shields.io/badge/Platforms-Windows%20%7C%20macOS%20%7C%20Linux-38bdf8.svg?style=for-the-badge" alt="Platforms" />
   <img src="https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-f59e0b.svg?style=for-the-badge&logo=python" alt="Python Versions" />
-  <img src="https://img.shields.io/badge/Release-Standalone%20.EXE%20%26%20Pip-10b981.svg?style=for-the-badge" alt="Release" />
+  <img src="https://img.shields.io/badge/Release-Standalone%20EXE%20%26%20Pip-10b981.svg?style=for-the-badge" alt="Release" />
   <img src="https://img.shields.io/badge/License-MIT-ef4444.svg?style=for-the-badge" alt="License" />
 </p>
 
@@ -12,18 +12,18 @@ An ultra-responsive, physics-driven, living **Desktop Floating Companion Ecosyst
 
 Featuring the **Procedural Cyber Spider** (with genuine orb-web weaving) and the **Graceful Fluttering Butterfly** (with full caterpillar-to-butterfly metamorphosis), alongside an active roadmap of upcoming desktop companions!
 
-The transparent overlay runs silently and non-intrusively across your active wallpaper, browser, code editors, and full-screen media with **100% transparent click-through mechanics (`WS_EX_TRANSPARENT`)**, zero taskbar clutter, 24/7 system tray controls, a sleek dark-glass live settings customizer (`Shift + P`), and an integrated **GitHub Auto-Updater with real-time Megabyte (MB) download progress**!
+The transparent overlay runs silently and non-intrusively across your active wallpaper, browser, code editors, and full-screen media with **100% transparent click-through mechanics (`WS_EX_TRANSPARENT`)**, zero taskbar clutter, 24/7 system tray controls, a sleek dark-glass live settings customizer (`Shift+P`), and an integrated **GitHub Auto-Updater with real-time Megabyte (MB) download progress**!
 
 ---
 
 ## 🖥️ Live Desktop Demo & Visual Showcase
 
-### 🕷️ Authentic Live Spider & Web Architecture on Desktop
+### Authentic Live Spider & Web Architecture on Desktop
 <p align="center">
   <img src="https://raw.githubusercontent.com/sohaghaldar/Desktop_floating-v1form/main/assets/spider_web_showcase.png" alt="Desktop Spider & Orb-Web Live Showcase" width="100%" />
 </p>
 
-### 🎨 Companion Ecosystem Vector Simulation
+### Companion Ecosystem Vector Simulation
 <p align="center">
   <img src="https://raw.githubusercontent.com/sohaghaldar/Desktop_floating-v1form/main/assets/preview.svg" alt="Desktop Floating Vector Preview" width="100%" />
 </p>
@@ -39,19 +39,19 @@ Desktop Floating is architected with cross-platform abstraction layers for nativ
 
 | Operating System | Recommended Launch Method | Supported Formats | Native Click-Through |
 | :--- | :--- | :--- | :---: |
-| 🪟 **Windows 10 / 11** | **[Download Standalone .EXE](https://github.com/sohaghaldar/Desktop_floating-v1form/releases)** or `pip install desktop-floating` | Standalone `.exe`, `.zip`, `pip` | ✅ Win32 Layered |
-| 🍎 **macOS (Intel & M-Series)** | `pip3 install desktop-floating` | Python Wheel, Source | ✅ Cocoa Native Canvas |
-| 🐧 **Linux (Ubuntu, Arch, Fedora)** | `pip install desktop-floating` or `./install.sh` | Python Wheel, Shell Script | ✅ X11 / Picom RGBA |
+| **Windows 10 / 11** | **[Download Standalone .EXE](https://github.com/sohaghaldar/Desktop_floating-v1form/releases)** or `pip install desktop-floating` | Standalone `.exe`, `.zip`, `pip` | ✅ Win32 Layered |
+| **macOS (Intel & M-Series)** | `pip3 install desktop-floating` | Python Wheel, Source | ✅ Cocoa Native Canvas |
+| **Linux (Ubuntu, Arch, Fedora)** | `pip install desktop-floating` or `./install.sh` | Python Wheel, Shell Script | ✅ X11 / Picom RGBA |
 
 > [!IMPORTANT]
 > **Understanding File Types Across Operating Systems:**  
-> The `.exe` download is a native Windows binary format designed specifically for Windows 10 and 11. macOS and Linux systems do not use `.exe` files natively. Instead, Mac and Linux users install Desktop Floating directly with one simple command: `pip install desktop-floating` (or run `./run.sh`). The app looks and performs identically across all three platforms!
+> The `.exe` download is a native Windows binary format designed specifically for Windows 10 and 11. macOS and Linux systems do not use `.exe` files natively. Instead, Mac and Linux users install Desktop Floating directly via **Pip** (or run `./run.sh`). The app looks, animates, and performs identically across all three platforms!
 
 ---
 
 ## 💻 Terminal & Command Prompt Experience
 
-When you run `desktop-floating` in your terminal (CMD, PowerShell, Bash, or Zsh), it greets you with an illuminated glowing cyber banner and instant quick-reference hotkeys:
+When you run `desktop-floating` in your terminal (CMD, PowerShell, Bash, or Zsh), it greets you with an illuminated glowing cyber banner and instant quick-reference hotkeys, and then **seamlessly detaches into the background**:
 
 ```text
   ███████╗██╗      ██████╗  █████╗ ████████╗██╗███╗   ██╗ ██████╗ 
@@ -74,12 +74,17 @@ When you run `desktop-floating` in your terminal (CMD, PowerShell, Bash, or Zsh)
      [Shift + `] Relocate Web / Cocoon Anchor
      [Shift + ESC] Safely Exit Pet & Application
   ----------------------------------------------------------------------
+  📍 Status: Launched seamlessly in background!
+  💡 You can safely close this CMD window anytime—your companion will stay floating!
 ```
 
 ### CLI Command Options
 ```bash
-# Launch or restart living companion on your desktop
+# Launch companion in background (closing CMD keeps companion alive)
 desktop-floating
+
+# Run attached directly inside terminal
+desktop-floating --foreground
 
 # Safely close any active companion
 desktop-floating --kill
@@ -103,8 +108,8 @@ desktop-floating --version
       <ul>
         <li><b>Procedural Inverse Kinematics (IK) Legs:</b> 8 independently calculated jointed legs that naturally grip screen boundaries and web strands with organic stepping phases.</li>
         <li><b>Authentic Orb-Web Weaving:</b> Procedural ceiling silk anchors, radial spoke construction, and concentric spiral threads with dewdrop weight physics.</li>
-        <li><b>Interactive Hunting:</b> Playfully crawls toward resting mouse cursors, delivers soft playful nudges, hunts flying flies, and performs silk bungee drops (<code>Shift + B</code>).</li>
-        <li><b>Spiderling Nursery:</b> Hatch dozens of tiny baby spiderlings that ride on the mother's back (<code>Shift + H</code>).</li>
+        <li><b>Interactive Hunting:</b> Playfully crawls toward resting mouse cursors, delivers soft playful nudges, hunts flying flies, and performs silk bungee drops (<code>Shift+B</code>).</li>
+        <li><b>Spiderling Nursery:</b> Hatch dozens of tiny baby spiderlings that ride on the mother's back (<code>Shift+H</code>).</li>
       </ul>
     </td>
     <td width="50%" valign="top">
@@ -112,8 +117,8 @@ desktop-floating --version
       <p><b>Status:</b> <code>Active & Ready</code> | <b>Type:</b> <code>Biological Lifecycle</code></p>
       <ul>
         <li><b>Full Metamorphosis:</b> Begins as an inchworm caterpillar crawling smoothly across screen edges and window frames.</li>
-        <li><b>Silky Cocoon Spinning:</b> Spins an organic silk cocoon anywhere on your monitor (<code>Shift + `</code>).</li>
-        <li><b>Aerodynamic Flapping Flight:</b> Emerges with dual-winged flight aerodynamics, smooth velocity gliding, and luminous stardust fairy particle trails (<code>Shift + B</code>).</li>
+        <li><b>Silky Cocoon Spinning:</b> Spins an organic silk cocoon anywhere on your monitor (<code>Shift+`</code>).</li>
+        <li><b>Aerodynamic Flapping Flight:</b> Emerges with dual-winged flight aerodynamics, smooth velocity gliding, and luminous stardust fairy particle trails (<code>Shift+B</code>).</li>
         <li><b>Natural Attraction:</b> Drifts toward your active cursor and perches gracefully on resting windows.</li>
       </ul>
     </td>
@@ -130,11 +135,11 @@ Desktop Floating is built on an extensible creature engine. New companions will 
 
 ---
 
-## 📥 Detailed Installation Guide
+## 📥 Step-by-Step Installation Guide
 
 Choose your operating system below:
 
-### 🪟 Windows 10 & 11
+### Windows 10 & 11
 
 #### Method A: Standalone Executable (Fastest — No Python Required)
 1. Download **`DesktopFloatingSpider.exe`** from the [GitHub Releases](https://github.com/sohaghaldar/Desktop_floating-v1form/releases) page.
@@ -142,34 +147,42 @@ Choose your operating system below:
 3. Your settings are automatically saved in `settings.json` next to the executable.
 
 #### Method B: Install via Pip
-```bash
-pip install desktop-floating
-desktop-floating
-```
+1. Install package:
+   ```bash
+   pip install desktop-floating
+   ```
+2. Launch companion:
+   ```bash
+   desktop-floating
+   ```
 
 #### Method C: One-Click Windows Script
 Double-click **`install.bat`** (or **`run_spider.bat`**) inside the repository folder.
 
 ---
 
-### 🍎 macOS (Apple Silicon M1/M2/M3 & Intel)
+### macOS (Apple Silicon M1/M2/M3 & Intel)
 
-#### 1. Install via Pip:
+#### Step 1: Install via Pip
 ```bash
 pip3 install desktop-floating
+```
+
+#### Step 2: Launch Companion
+```bash
 desktop-floating
 ```
 
-#### 2. Enable Accessibility Permission:
-To allow global background hotkeys (`Shift + P`, `Shift + M`) on macOS:
+#### Step 3: Enable Accessibility Permission (for Hotkeys)
+To allow global background hotkeys like `Shift+P` (Settings) and `Shift+M` (Switch Companion) on macOS:
 1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
 2. Turn ON the toggle next to **Terminal** (or **Python**).
 
 ---
 
-### 🐧 Linux (Ubuntu, Debian, Arch, Fedora)
+### Linux (Ubuntu, Debian, Arch, Fedora)
 
-#### 1. Ensure Tkinter is installed:
+#### Step 1: Ensure Tkinter is installed
 ```bash
 # Ubuntu / Debian / Linux Mint
 sudo apt update && sudo apt install -y python3-tk
@@ -181,13 +194,17 @@ sudo pacman -S tk
 sudo dnf install python3-tkinter
 ```
 
-#### 2. Install and launch:
+#### Step 2: Install via Pip
 ```bash
 pip install desktop-floating
+```
+
+#### Step 3: Launch Companion
+```bash
 desktop-floating
 ```
 
-#### 3. Or use the one-click shell scripts:
+#### Step 4: Or use the one-click shell scripts
 ```bash
 chmod +x install.sh run.sh
 ./install.sh
@@ -203,7 +220,7 @@ chmod +x install.sh run.sh
 
 - **🚀 100% Standalone Portable `.exe` (Windows)**:
   - Run immediately on any Windows PC without installing Python, Git, or dependencies!
-  - Fully persistent settings (`settings.json` stays alongside the executable).
+  - Fully persistent settings across reboots and locations.
 - **🪟 Clean Taskbar & 24/7 Tray Integration**:
   - The transparent overlay runs with `WS_EX_TOOLWINDOW`—zero taskbar buttons to clutter your screen.
   - The Taskbar button only appears while the **Live Settings & Customizer** window is open.
@@ -226,7 +243,7 @@ chmod +x install.sh run.sh
 
 ## 🎮 Hotkeys Quick Reference (কিবোর্ড শর্টকাট)
 
-All hotkeys can be customized inside the **Live Settings Customizer** (`Shift + P`).
+All hotkeys can be customized inside the **Live Settings Customizer** (`Shift+P`).
 
 | Hotkey | Action (English) | বিবরণ (বাংলা) |
 | :--- | :--- | :--- |
@@ -248,7 +265,7 @@ All hotkeys can be customized inside the **Live Settings Customizer** (`Shift + 
 
 ## ⚙️ Configuration & Customization (`settings.json`)
 
-All settings persist in `settings.json`. You can modify them directly from the in-app **Live Settings Control Panel** (`Shift + P`) or manually in the JSON file:
+All settings persist in `settings.json` (and automatically synchronized to `%APPDATA%\DesktopFloatingSpider\settings.json`). You can modify them directly from the in-app **Live Settings Control Panel** (`Shift+P`) or manually in the JSON file:
 
 ```json
 {
@@ -275,7 +292,7 @@ All settings persist in `settings.json`. You can modify them directly from the i
 ## 🔄 Built-in GitHub Auto-Updater
 
 Desktop Floating includes a native updater engine:
-1. When you open the Settings panel (`Shift + P`), it silently queries the latest GitHub release.
+1. When you open the Settings panel (`Shift+P`), it silently queries the latest GitHub release.
 2. If an update is available, you will see a notification and the **Update Now** button will illuminate.
 3. Clicking **Update Now** downloads the release with a **live MB counter** (`Downloading: 12.4 MB / 31.2 MB (40%)`).
 4. Once verified, it applies the update atomically and seamlessly restarts the application.
